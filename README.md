@@ -33,6 +33,10 @@ It includes the following key functionalities:
 ### Database
 - SQL Server
 
+## 🖼️ Project Image
+
+### Home Screen
+![Home Screen](https://github.com/Jaqz23/Itla-Tv-Plus/blob/3cc07a56e37fff02b242012e36e5daae1675dd41/Home.png)
 
 ## 📋 Prerequisites
 
