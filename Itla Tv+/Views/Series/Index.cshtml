@@ -1,0 +1,62 @@
+﻿@using Application.ViewModels.Series
+@model List<SeriesViewModel>
+
+@{
+    ViewData["Title"] = "Mantenimiento de Series";
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2 class="text-dark mb-4">Mantenimiento de Series</h2>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12 text-end">
+            <a href="@Url.Action("Create", "Series")" class="btn btn-success">
+                Crear Nueva Serie
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center">
+                <h4 class="text-muted">No hay series registradas</h4>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <img src="@item.ImagePath" class="img-fluid card-img-top rounded img-size" alt="@item.Name" />
+
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">@item.Name</h5>
+                            <p class="mb-1"><strong>Género Principal:</strong> @item.GeneroPrimario</p>
+                            @if (!string.IsNullOrEmpty(item.GeneroSecundario))
+                            {
+                                <p class="mb-1"><strong>Género Secundario:</strong> @item.GeneroSecundario</p>
+                            }
+                            <p class="mb-2"><strong>Productora:</strong> @item.Productora</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="@Url.Action("Edit", "Series", new { id = item.Id })" 
+                                   class="btn btn-sm btn-outline-info">
+                                    Editar
+                                </a>
+                                <a href="@Url.Action("Delete", "Series", new { id = item.Id })" 
+                                   class="btn btn-sm btn-outline-danger">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

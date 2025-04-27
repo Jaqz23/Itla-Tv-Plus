@@ -1,0 +1,102 @@
+﻿@using Application.ViewModels.Series
+@model List<SeriesViewModel>
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h3 class="text-dark mb-4">Listado de Series</h3>
+        </div>
+    </div>
+
+    <!-- Formulario de Filtros y Ordenamiento -->
+
+    <div class="row mb-3">
+        <!-- Filtro por Productora -->
+        <div class="col-md-4">
+            <form method="get">
+                <div class="input-group">
+                    <select name="productoraId" class="form-select">
+                        <option value="">Todas las Productoras</option>
+                        @foreach (var productora in ViewBag.Productoras)
+                        {
+                            <option value="@productora.Id" selected="@(productora.Id.ToString() == Context.Request.Query["productoraId"])">@productora.Name</option>
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-success">Filtrar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Filtro por Género -->
+        <div class="col-md-4">
+            <form method="get">
+                <div class="input-group">
+                    <select name="generoId" class="form-select">
+                        <option value="">Todos los Géneros</option>
+                        @foreach (var genero in ViewBag.Generos)
+                        {
+                            <option value="@genero.Id" selected="@(genero.Id.ToString() == Context.Request.Query["generoId"])">@genero.Name</option>
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-success">Filtrar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Ordenamiento -->
+        <div class="col-md-4">
+            <form method="get">
+                <div class="input-group">
+                    <select name="sortOrder" class="form-select">
+                        <option value="">Ordenar por...</option>
+                        <option value="name" selected="@(Context.Request.Query["sortOrder"] == "name")">Nombre</option>
+                        <option value="productora" selected="@(Context.Request.Query["sortOrder"] == "productora")">Productora</option>
+                        <option value="genero" selected="@(Context.Request.Query["sortOrder"] == "genero")">Género</option>
+                    </select>
+                    <button type="submit" class="btn btn-success">Ordenar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Listado de Series -->
+    <div class="row mt-5">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center">
+                <h4 class="text-muted">No hay series registradas</h4>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="card border-0 shadow-sm">
+                        <img src="@item.ImagePath" class="img-fluid card-img-top rounded img-size" alt="@item.Name" />
+
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">@item.Name</h5>
+                            <p class="mb-1"><strong>Género Principal:</strong> @item.GeneroPrimario</p>
+                            @if (!string.IsNullOrEmpty(item.GeneroSecundario))
+                            {
+                                <p class="mb-1"><strong>Género Secundario:</strong> @item.GeneroSecundario</p>
+                            }
+                            <p class="mb-2"><strong>Productora:</strong> @item.Productora</p>
+                            <div class="text-center">
+                                <a href="@Url.Action("Details", "Home", new { id = item.Id })" 
+                                   class="btn btn-sm btn-success mt-2 w-100">
+                                    Ver Detalles
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

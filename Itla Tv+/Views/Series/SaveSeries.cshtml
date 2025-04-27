@@ -1,0 +1,116 @@
+﻿@model Application.ViewModels.Series.SaveSeriesViewModel
+
+@{
+    bool editMode = Model.Id != 0; // Determina si es edición o creación
+    ViewData["Title"] = editMode ? $"Editando la serie: {Model.Name}" : "Creando una nueva serie";
+}
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <div class="card">
+            <div class="card-header bg-dark text-light">
+                <h4>@(editMode ? $"Editando la serie: {Model.Name}" : "Creando una nueva serie")</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-controller="Series" asp-action="@(editMode ? "Edit" : "Create")">
+                    
+                    <!-- Campo Nombre -->
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">Nombre de la serie:</label>
+                        <input type="text" asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <!-- Campo Descripcion -->
+                     <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Descripción de la serie:</label>
+                        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                    </div>
+
+
+                    <!-- Campo Imagen de Portada -->
+                    <div class="mb-3">
+                        <label asp-for="ImagePath" class="form-label">Imagen de portada (URL):</label>
+                        <input type="text" asp-for="ImagePath" class="form-control" />
+                        <span asp-validation-for="ImagePath" class="text-danger"></span>
+                    </div>
+
+                    <!-- Campo Enlace del Video -->
+                    <div class="mb-3">
+                        <label asp-for="VideoLink" class="form-label">Enlace del video (YouTube):</label>
+                        <input type="text" asp-for="VideoLink" class="form-control" />
+                        <span asp-validation-for="VideoLink" class="text-danger"></span>
+                    </div>
+
+                    <!-- Select Productora -->
+                    <div class="mb-3">
+                        <label asp-for="ProductoraId" class="form-label">Productora:</label>
+                        <select asp-for="ProductoraId" class="form-select">
+                            <option value="">Seleccione una productora</option>
+                            @foreach (var productora in Model.Productoras)
+                            {
+                                if (productora.Id == Model.ProductoraId)
+                                {
+                                    <option value="@productora.Id" selected>@productora.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@productora.Id">@productora.Name</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="ProductoraId" class="text-danger"></span>
+                    </div>
+
+                    <!-- Select Género Primario -->
+                    <div class="mb-3">
+                        <label asp-for="GeneroPrimarioId" class="form-label">Género Principal:</label>
+                        <select asp-for="GeneroPrimarioId" class="form-select">
+                            <option value="">Seleccione un género principal</option>
+                            @foreach (var genero in Model.Generos)
+                            {
+                                if (genero.Id == Model.GeneroPrimarioId)
+                                {
+                                    <option value="@genero.Id" selected>@genero.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@genero.Id">@genero.Name</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="GeneroPrimarioId" class="text-danger"></span>
+                    </div>
+
+                    <!-- Select Género Secundario -->
+                    <div class="mb-3">
+                        <label asp-for="GeneroSecundarioId" class="form-label">Género Secundario (Opcional):</label>
+                        <select asp-for="GeneroSecundarioId" class="form-select">
+                            <option value="">Seleccione un género secundario</option>
+                            @foreach (var genero in Model.Generos)
+                            {
+                                if (genero.Id == Model.GeneroSecundarioId)
+                                {
+                                    <option value="@genero.Id" selected>@genero.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@genero.Id">@genero.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Campo Oculto para el Id -->
+                    <input type="hidden" asp-for="Id" />
+
+                    <!-- Botones -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a asp-controller="Series" asp-action="Index" class="btn btn-warning">Volver atrás</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

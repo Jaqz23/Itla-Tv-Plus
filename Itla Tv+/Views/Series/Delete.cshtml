@@ -1,0 +1,27 @@
+﻿@model Application.ViewModels.Series.SaveSeriesViewModel
+
+@{
+    ViewData["Title"] = "Eliminar serie";
+}
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card">
+            <div class="card-header bg-dark text-light">
+                <h4>¿Está seguro que desea eliminar la serie "@Model.Name"?</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-controller="Series" asp-action="DeletePost">                 
+                    <!-- Campo Oculto para el Id -->
+                    <input type="hidden" asp-for="Id" />
+
+                    <!-- Botones -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <a asp-controller="Series" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
