@@ -1,4 +1,4 @@
-# ITLA TV+ - Streaming App This project is a video streaming application developed with **ASP.NET Core MVC** .NET 8, designed for educational purposes.
+This project is a video streaming application developed with **ASP.NET Core MVC** .NET 8, designed for educational purposes.
 ## 📖 About ITLA TV+
 
 ITLA TV+ is a streaming video application built using ASP.NET Core MVC.
